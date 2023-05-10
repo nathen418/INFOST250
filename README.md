@@ -1,4 +1,5 @@
 # Learning Kubernetes w/ Rancher
+
 A project for my INFOST250 Network and System Administration class at the University of Wisconsin Milwaukee.
 
 For this final project I am learning Kubernetes and using Rancher as my web ui for managing my containers and changing settings. More info can be found at **[rancher.com](https://rancher.com)** and **[kubernetes.io](https://kubernetes.io/)**
@@ -9,22 +10,15 @@ Kubernetes is a container orchestration tool that allows you to manage and scale
 
 ## About Rancher
 
-Rancher is a web ui tool that allows you to manage your kubernetes cluster. It is a very powerful tool that allows you to manage your kubernetes clusters from a single pane of glass. It has API's that allow it to connect to managed clusters on all the major cloud platforms as well as locally created clusters. It also has a built in catalog of applications that you can deploy to your cluster with a single click.
+Rancher is a web-ui tool that allows you to manage your kubernetes cluster. It is a very powerful tool that allows you to manage your kubernetes clusters from a single pane of glass. It has API's that allow it to connect to managed clusters on all the major cloud platforms as well as locally created clusters. It also has a built in catalog of applications that you can deploy to your cluster with a single click.
 
 ## Project scope
 
 In this project I aim to set up a kubernetes cluster with 3 nodes running Ubuntu Server 22.04 and using Rancher as the web ui tool that i will use to interact with the cluster after initial setup. On the cluster I aim to have 4 services running:
 
-- 1 ubuntu/apache2
-
-- 1 ngnix
-
-- 1 henrywhitaker3/speedtest-tracker
-
-- 1 nodejs (Probably a discord bot or something similar)
-
 ## Creating the cluster
 
+I will be installing `RKE` which is  a "certified Kubernetes distribution that runs entirely within Docker containers. It solves the common frustration of installation complexity with Kubernetes by removing most host dependencies and presenting a stable path for deployment, upgrades, and rollbacks." [Learn More about RKE](https://www.rancher.com/products/rke)  
 **Do all sections in the order they appear and do not skip any steps.**
 
 ### Steps for all nodes  
@@ -56,20 +50,43 @@ Note: `--privileged` is required for the cluster to work properly. If you do not
 
 1. Click on the "Create" button at the top of the table in the middle of the screen.
 2. Select the Custom option.
-3. Give your cluster a name, description, select a kubernetes version (I went with 1.25.9+k3s1), and uncheck "Traefik Ingress" and click "Create".
+3. Give your cluster a name, description, select a kubernetes version (I went with 1.25.9-rancher2-1) , and uncheck "Traefik Ingress" and click "Create".
 4. Wait for the cluster to finish creating. This may take a few minutes depending on your hardware.
 5. Once the cluster is created, click on the "Registration" tab at the top of the table in the middle of the screen.
 
 ### Agent Node Setup
 
 1. SSH into each node and run the command that was created when you created the cluster. It should look something like this:  
-**`curl --insecure -fL https://master-node-ip/system-agent-install.sh | sudo sh -s - --server https://master-node-ip --label 'cattle.io/os=linux' --token some-token-here --ca-checksum some-checksum-here`**  
+**`sudo docker run -d --privileged --restart=unless-stopped --net=host -v /etc/kubernetes:/etc/kubernetes -v /var/run:/var/run  rancher/rancher-agent:v2.7.3 --server https://master-node-ip --token token-here --ca-checksum ca-checksum-here --worker`**  
 On the master node, add the flags **`--etcd --controlplane --worker`** to the end of the command. On the agent nodes, add the flag **`--worker`** to the end of the command.
 2. Wait for the agent to finish installing and then refresh the rancher web ui. You should see the agent node show up in the cluster.
 3. Wait until the agent node shows as "Running". This may take a few minutes depending on your hardware. DO NOT REBOOT OR DISCONNECT YOUR NODES FROM THE NETWORK during this process. If you do you may have to start over.
 4. Repeat steps 1-3 for each agent node.
 
 
+### Service deployment
 
-## License
-- [MIT](https://github.com/nathen418/INFOST250/blob/main/LICENSE)
+1. Go to the Homepage, and click on the cluster name you just created.
+2. Click on "Deployments" on the upper left of the screen.
+3. Click "Create" and fill out the service details just like you would with a docker container. and click "Create"
+4. Wait for the service to propagate to all your nodes. This may take a few minutes depending on your hardware.
+5. Repeat steps 3-4 for each service you want to deploy.
+
+Additional work is required to setup high availability for services such as using (keepalived)[https://www.keepalived.org/] that uses the Virtual Router Redundancy Protocol (VRRP) to provide a high availability virtual IP address (VIP) and a failover service.  
+    You can also set up a Service Load balancer in Rancher to load balance the service across multiple nodes and let the external load balancer handle managing traffic. I will not be covering this today as it is out of scope of my project.
+
+
+## Examples
+
+I deployed these applications:
+
+- 1 ubuntu/apache2  
+[https://apache2.kube.antaresnetwork.com](https://apache2.kube.antaresnetwork.com)
+![](img1.png)  
+
+- 1 ngnix  
+[https://nginx.kube.antaresnetwork.com](https://nginx.kube.antaresnetwork.com)
+![](img2.png)  
+
+- 1 henrywhitaker3/speedtest-tracker  
+    [https://speedtest-track.kube.antaresnetwork.com](https://speedtest-track.kube.antaresnetwork.com)
