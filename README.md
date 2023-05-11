@@ -81,12 +81,12 @@ Additional work is required to setup high availability for services such as usin
 I deployed these applications:
 
 - 1 ubuntu/apache2  
-[https://apache2.kube.antaresnetwork.com](https://apache2.kube.antaresnetwork.com)
+[https://ap2-kube.antaresnetwork.com](https://apache2.kube.antaresnetwork.com)
 ![](img1.png)  
 
 - 1 ngnix  
-[https://nginx.kube.antaresnetwork.com](https://nginx.kube.antaresnetwork.com)
+[https://nginx-kube.antaresnetwork.com](https://nginx.kube.antaresnetwork.com)
 ![](img2.png)  
 
 - 1 henrywhitaker3/speedtest-tracker  
-    [https://speedtest-track.kube.antaresnetwork.com](https://speedtest-track.kube.antaresnetwork.com)
+[https://speedtest-track.kube.antaresnetwork.com](https://speedtest-track.kube.antaresnetwork.com)
