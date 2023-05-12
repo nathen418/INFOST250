@@ -89,4 +89,4 @@ I deployed these applications:
 ![](img2.png)  
 
 - 1 henrywhitaker3/speedtest-tracker  
-[https://speedtest-track.kube.antaresnetwork.com](https://speedtest-track.kube.antaresnetwork.com)
+No link
