@@ -88,5 +88,5 @@ I deployed these applications:
 [https://nginx-kube.antaresnetwork.com](https://nginx-kube.antaresnetwork.com)
 ![](img2.png)  
 
-- 1 henrywhitaker3/speedtest-tracker  
+- 1 linuxserver/heimdall  
 No link
