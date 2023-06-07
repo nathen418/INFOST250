@@ -81,11 +81,11 @@ Additional work is required to setup high availability for services such as usin
 I deployed these applications:
 
 - 1 ubuntu/apache2  
-[https://ap2-kube.antaresnetwork.com](https://ap2-kube.antaresnetwork.com)
+[https://ap2-kube.antaresnetwork.com](https://ap2-kube.antaresnetwork.com) **---! This link is no longer active as the class has concluded !---**
 ![](img1.png)  
 
 - 1 ngnix  
-[https://nginx-kube.antaresnetwork.com](https://nginx-kube.antaresnetwork.com)
+[https://nginx-kube.antaresnetwork.com](https://nginx-kube.antaresnetwork.com) **---! This link is no longer active as the class has concluded !---**
 ![](img2.png)  
 
 - 1 linuxserver/heimdall  
